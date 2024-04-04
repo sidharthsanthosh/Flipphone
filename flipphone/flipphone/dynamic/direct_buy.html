@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    /* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f5f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.heading {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.table {
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+    text-align: center;
+    vertical-align: middle;
+    background-color: #343a40;
+    color: #fff;
+}
+
+.table tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.product-image {
+    max-width: 100px;
+    height: auto;
+}
+
+.product-name {
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+.product-price {
+    font-weight: bold;
+}
+
+.quantity {
+    font-size: 16px;
+}
+
+.total {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.actions {
+    margin-top: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .container-fluid {
+        padding: 10px;
+    }
+}
+
+</style>
+<body>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h2 class="heading">Your Shopping Cart</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="2">Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for buy_item in buy_items %}
+                        <tr>
+                            <td class="align-middle">
+                                <a href="{{ buy_item.product.get_url }}">
+                                    <img src="{{ buy_item.product.product_image.url }}" alt="{{ buy_item.product.product_name }}" class="product-image">
+                                </a>
+                            </td>
+                            <td class="align-middle">
+                                <h5 class="product-name">{{ buy_item.product.product_name }}</h5>
+                            </td>
+                            <td class="align-middle product-price">₹{{ buy_item.product.product_price }}</td>
+                            <td class="align-middle">
+                                <span class="quantity">{{ buy_item.quantity }}</span>
+                            </td>
+                            <td class="align-middle">₹{{ buy_item.sub_total }}</td>
+                            <td class="align-middle">
+                                <div class="actions">
+                                    {% if buy_item.quantity < buy_item.product.stock %}
+                                    <a href="{% url 'cartapp:add_buy' buy_item.product.id %}" class="btn btn-outline-success"><i class="fa fa-plus"></i></a>
+                                    {% endif %}
+                                    <a href="{% url 'cartapp:buy_remove' buy_item.product.id %}" class="btn btn-outline-danger"><i class="fa fa-minus"></i></a>
+                                    <a href="{% url 'cartapp:buy_full_remove' buy_item.product.id %}" class="btn btn-outline-danger">Remove</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-8 text-center">
+            <h2 class="heading">Checkout</h2>
+            <p class="lead">Please review your shopping cart items before proceeding with the order payment.</p>
+            <p class="total">Your Total is: <strong>₹{{ total }}</strong></p>
+            <div class="actions">
+                <a href="/" class="btn btn-secondary" style="background-color: black;">Continue Shopping</a>
+                <a href="{% url 'payment:payment_opt' %}" class="btn btn-success" style="background-color: black;">Order Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

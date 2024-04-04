@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .title h4 {
+            color: #333;
+            margin: 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #688FFC;
+            display: inline-block;
+        }
+        .cart-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item img {
+            max-width: 100px;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+        .product-details {
+            flex-grow: 1;
+        }
+        .product-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .product-actions {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-actions a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+        .quantity-actions a:hover {
+            color: #688FFC;
+        }
+        .total-price {
+            font-size: 18px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .back-to-shop {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .back-to-shop a {
+            color: #688FFC;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .back-to-shop a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="title">
+            <h4><b>Shopping Cart</b></h4>
+        </div> 
+        {% if not cart_items %}   
+            <h1>Your cart is empty</h1>
+            <p>Please click <a href="/">here</a> to add products</p>
+        {% else %}
+            {% for cart_item in cart_items %}
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-2"><a href="{{cart_item.product.get_url}}"><img class="img-fluid" src="{{cart_item.product.product_image.url}}" alt="{{cart_item.product.product_name}}"></a></div>
+                        <div class="col product-details">
+                            <div class="product-name">{{cart_item.product.product_name}}</div>
+                            <div class="product-actions">
+                                {% if cart_item.quantity < cart_item.product.stock %}
+                                    <div class="quantity-actions">
+                                        <a href="{% url 'cartapp:add_cart' cart_item.product.id %}"><i class="fa fa-plus"></i></a>
+                                        <span>{{ cart_item.quantity }}</span>
+                                        <a href="{% url 'cartapp:cart_remove' cart_item.product.id %}"><i class="fa fa-minus"></i></a>
+                                    </div>
+                                {% else %}
+                                    <a href="{% url 'cartapp:cart_remove' cart_item.product.id %}"><i class="fa fa-minus"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-2 total-price">Total:₹{{cart_item.sub_total}}</div>
+                        <div class="col-2 text-right"><a href="{% url 'cartapp:full_remove' cart_item.product.id %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="back-to-shop"><a href="/" style="color: black;"> &leftarrow; Back to shop</a></div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+            font-family: Arial, sans-serif;
+        }
+
+        .loader {
+            border: 8px solid #000; /* Black border */
+            border-radius: 50%;
+            border-top: 8px solid #f3f3f3;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #orderPlaced {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        #orderPlaced.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out forwards;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out forwards;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+            animation-delay: 2s; /* Delay button animation */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <div id="orderPlaced">
+        <h2>Order Placed</h2>
+        <p>Order ID: {{ trans_id }}</p>
+        <div>
+            <button onclick="goHome()" style="background-color: #000;">Go Home</button>
+            <button onclick="goBackToCart()" style="background-color: #000;">Back to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelector('.loader').style.display = 'none';
+            document.getElementById('orderPlaced').classList.add('show');
+        }, 5000);
+
+        function goHome() {
+            window.location.href = "/" ;
+        }
+
+        function goBackToCart() {
+            window.location.href = "{% url 'cartapp:cart_detail' %}";
+        }
+    </script>
+</body>
+</html>

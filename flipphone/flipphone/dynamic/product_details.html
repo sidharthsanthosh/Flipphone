@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  /* CSS */
+.button-3 {
+  appearance: none;
+  background-color: #0d0d0d;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #3c3f3d;
+}
+
+.button-3:focus {
+  box-shadow: rgba(3, 3, 3, 0.4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #080808;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #070707;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+</style>
+<body>
+
+{% load static %}
+
+
+
+
+  <div class="de-main" style="display: flex;justify-content: space-evenly;margin-top: 5rem;">
+  
+    {% for i in data %}
+
+    <div class="image-section">
+      <img src="{{i.product_image.url}}" alt="" style="width:auto;height: 50vh;">
+     
+      <!-- HTML !-->
+<a href="{% url 'cartapp:add_buy' product_id=i.id %}" class="button-3" role="button" style="margin-left: -281px;margin-top: 71px;">Buy Now</a>
+<a href="{% url 'cartapp:add_cart' product_id=i.id %}" class="button-3" role="button" style="margin-top: 71px;margin-left: 0">Add to Cart</a>
+
+
+
+    </div>
+    <div class="details" style="color: rgb(0, 0, 0);">
+      <h2>{{i.product_name}}</h2> <hr>
+
+      <div class="dec" style="width: 450px;"> 
+        <p>Rs {{i.product_price}}</p> <hr>
+      </div>
+      <h4> Stock : {{i.stock}}</h4> <hr>
+
+      <div class="dec" style="width: 450px;"> 
+        <p>{{i.product_des}}</p> <hr>
+      </div>
+      
+      
+     
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_build}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Ram}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Rom}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Display}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_camera}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Processor}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Battery}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_connectivity}}</p> <hr>
+      </div>
+
+      <div class="dec" style="width: 450px;" > 
+        <p>{{i.product_Operatingsystem}}</p> <hr>
+      </div>
+
+     
+     
+      
+    </div>
+  
+   
+    {% endfor %}
+  </div>
+
+
+ 
+     <style>
+      hr{
+        color: rgb(10, 1, 1);
+      }
+       a{
+        text-decoration: none;
+        color: rgb(13, 13, 13);
+      }
+      img{
+        border-radius: 15px;
+      }
+     </style>
+
+</body>
+</html>

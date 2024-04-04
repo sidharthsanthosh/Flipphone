@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="main" style="display: flex; justify-content: space-evenly; margin-top: 5rem;flex-direction: row; flex-wrap: wrap;"></div>    
+      <div style="border-bottom: 3rex;margin-bottom: 3rem; border: solid 1px black;">
+    
+<div class="img_div">
+            <img src="{{i.product_image.url}}" alt="" style="width: 15rem;margin-left: 7rem;">
+</div>
+
+<div class="details" style="color: black;">
+     <h2 style="padding-left: 7rem;">{{i.product_name}}</h2><hr>
+     <h5 style="padding-left: 8rem;">Rs {{i.product_price}}</h5><hr>
+     <h6 style="padding-left: 8rem;"> stock remaining: {{i.stock}}</h6><hr>
+
+     <button class="btn btn-basic" style="background-color: yellow;"><a style="text-decoration: none;color: black;margin: 11rem;"></a></button>
+</div>
+
+
+    </div>
+    { % endfor % } 
+
+</body>
+</html>

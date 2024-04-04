@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white" style="background-color: black !important;">
+                        <h5 class="mb-0">Payment Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'payment:success' %}" method="post" id="paymentForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text"  id="" name="path" value="{{path}}" hidden>
+                                <input type="text" class="form-control" id="address" name="addr" placeholder="Enter your address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact">Contact</label>
+                                <input type="tel" class="form-control" id="contact" name="mob" placeholder="9874563210" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pin">PIN</label>
+                                <input type="number" class="form-control" id="pin" name="pn" placeholder="632541" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentMethod">Payment Method</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="cardPayment" name="tab" class="custom-control-input" value="card" checked>
+                                    <label class="custom-control-label" for="cardPayment" >Credit/Debit Card</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="upiPayment" name="tab" class="custom-control-input" value="upi">
+                                    <label class="custom-control-label" for="upiPayment" name="tab">UPI</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="codPayment" name="tab" class="custom-control-input" value="cash_on_delivery">
+                                    <label class="custom-control-label" for="codPayment" name="tab">Cash on Delivery</label>
+                                </div>
+                            </div>
+                            <div id="cardFields" class="payment-option">
+                                <div class="form-group">
+                                    <label for="cardNumber">Card Number</label>
+                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 435678">
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiry Date</label>
+                                    <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YYYY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV/CVC</label>
+                                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="********">
+                                </div>
+                            </div>
+                            <div id="upiFields" class="payment-option" style="display: none;">
+                                <div class="form-group">
+                                    <label for="upiId">UPI ID</label>
+                                    <input type="text" class="form-control" id="upiId" name="upiId" placeholder="example@upi">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Pay Now</button>
+                                <a href="{% url 'cartapp:cart_detail' %}" class="btn btn-secondary">Back to Cart</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var paymentMethodRadios = document.querySelectorAll('input[name="tab"]');
+            var paymentOptionDivs = document.querySelectorAll('.payment-option');
+
+            function togglePaymentOptions() {
+                paymentOptionDivs.forEach(function(option) {
+                    option.style.display = "none";
+                });
+                
+                var selectedOption = document.querySelector('input[name="tab"]:checked').value;
+                var selectedOptionDiv = document.getElementById(selectedOption + "Fields");
+                if (selectedOptionDiv) {
+                    selectedOptionDiv.style.display = "block";
+                }
+            }
+
+            // Initial toggle
+            togglePaymentOptions();
+
+            paymentMethodRadios.forEach(function(radio) {
+                radio.addEventListener("change", togglePaymentOptions);
+            });
+        });
+    </script>
+</body>
+</html>

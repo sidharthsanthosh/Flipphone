@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            background-image: url(../static/images/orderbg.jpg);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .order {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+        }
+        .order-image {
+            flex: 0 0 auto;
+            margin-right: 20px;
+        }
+        .order-image img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .order-details {
+            flex: 1;
+            
+            padding: 0;
+        }
+        .order-details li {
+            margin-bottom: 10px;
+        }
+        .order-details strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>Orders</h3>
+    {% if data %}
+        {% for order in data %}
+            <div class="order">
+                <div class="order-image">
+                    <img src="{{i.product_image.url}}" alt="">
+                </div>
+                <ul class="order-details">
+                    <li><strong>Name:</strong> {{ order.user }}</li>
+                    <li><strong>Products:</strong> {{ order.products }}</li>
+                    <li><strong>Amount:</strong> {{ order.amount }}</li>
+                    <li><strong>Payment Method:</strong> {{ order.pay_method }}</li>
+                    <li><strong>Address:</strong> {{ order.address }}</li>
+                    <li><strong>Pin:</strong> {{ order.Pin }}</li>
+                    <li><strong>Mobile:</strong> {{ order.mobile }}</li>
+                    <li><strong>Order ID:</strong> {{ order.order_id }}</li>
+                    <li><strong>Order Date:</strong> {{ order.o_date }}</li>
+                    <li><strong>Delivery Date:</strong> {{ order.d_date }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
